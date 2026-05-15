@@ -3,7 +3,7 @@ import express, { request, type Application, type Request, type Response } from 
 
 import {  pool } from "./db"
 import { userRoute } from "./modules/user/user.route"
-import { profileRoute } from "./modules/user/profile/profile.route"
+import { profileRoute } from "./modules/profile/profile.route"
 const app: Application = express()
 
 
