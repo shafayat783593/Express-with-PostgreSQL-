@@ -25,7 +25,7 @@ export const getAllUser = async (req: Request, res: Response) => {
         res.status(200).json({
             success: true,
             message: "Users retrived successfully",
-            data: result.rows
+            data: result
         })
     } catch (error: any) {
         res.status(500).json({
@@ -41,7 +41,7 @@ export const getsingleUser = async (req: Request, res: Response) => {
 
     try {
         const result = await getsingleUserFromDB(id as string)
-        if (result.rows.length === 0) {
+        if (result.length === 0) {
             res.status(404).json({
                 success: false,
                 message: "Users not found",
@@ -51,7 +51,7 @@ export const getsingleUser = async (req: Request, res: Response) => {
         res.status(200).json({
             success: true,
             message: "Users retrived successfully",
-            data: result.rows
+            data:result
         })
     } catch (error: any) {
         res.status(500).json({

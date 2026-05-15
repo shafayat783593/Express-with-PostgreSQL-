@@ -1,12 +1,15 @@
 import { pool } from "../../db"
 import type { IUser } from "./user.interface"
+import bcrypt from "bcryptjs";
 
 export const createUserIntoDB = async (payload: IUser) => {
-    const {name, email, age, password}= payload
+    const { name, email, age, password } = payload
+    const hashPassword = await bcrypt.hash(password, 12);
+
       const result = await pool.query(`
         INSERT INTO users(name, email, age, password) VALUES($1,$2,$3,$4) RETURNING *
-        `, [name, email, age, password])
-
+        `, [name, email, age, hashPassword])
+delete result.rows[0].password
      return result
 }
 
@@ -16,7 +19,10 @@ export const getAllUserFromDB = async () => {
             SELECT *FROM users
             `
     )
-    return result
+
+    const usersWithoutPassword = result.rows.map(({ password, ...user }) => user);
+
+    return usersWithoutPassword
 }
 
 export const getsingleUserFromDB = async (id:string) => {
@@ -25,8 +31,10 @@ export const getsingleUserFromDB = async (id:string) => {
     `, [id]
        )
 
-        
-        return result
+    const { password, ...userWithoutPassword } = result.rows[0];
+         
+    console.log(userWithoutPassword)
+        return userWithoutPassword
 }
 
 

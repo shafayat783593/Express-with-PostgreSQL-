@@ -1,7 +1,10 @@
 export interface Iprofile{
-    user_id
-    bio
-    address
-    phone
-    gender
+    user_id: string,
+    
+    bio: string,
+    
+    address: string,
+    
+    phone:string,
+    gender:string
 }
