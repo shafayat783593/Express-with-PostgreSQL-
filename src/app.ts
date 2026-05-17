@@ -9,13 +9,15 @@ import { userRoute } from "./modules/user/user.route"
 import { profileRoute } from "./modules/profile/profile.route"
 import { authRouter } from "./modules/auth/auth.route"
 import { logger } from "./middleware/loogger"
+import Cookeparce from "cookie-parser"
 const app: Application = express()
 
 
-
+app.use(Cookeparce())
 app.use(express.json())
 app.use(express.text())
 app.use(express.urlencoded({ extended: true }))
+
 app.use(logger)
 
 app.get('/', (req: Request, res: Response) => {

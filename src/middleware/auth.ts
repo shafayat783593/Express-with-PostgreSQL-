@@ -22,9 +22,9 @@ const auth = (...roles:ROLE[]) => {
             })
 
         }
-        const csecretToken = process.env.JWT_Token
+        const accsecretToken = process.env.JWT_ACCESS_TOKEN
 //verify the token
-        const decoded = jwt.verify(token as string, csecretToken as string) as JwtPayload
+        const decoded = jwt.verify(token as string, accsecretToken as string) as JwtPayload
 // find ther user into database
         const userData = await pool.query(
             `
