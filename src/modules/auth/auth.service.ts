@@ -18,8 +18,9 @@ export const loginIntoDB = async (payload: Iauth) => {
 
     }
     const user = userData.rows[0]
+    
     const mathchPassword = await bcrypt.compare(password, user.password)
-    console.log(mathchPassword)
+
     if (!mathchPassword) {
         throw new Error("Invalid Credentilas !")
 
@@ -29,7 +30,8 @@ export const loginIntoDB = async (payload: Iauth) => {
         id: user.id,
         name: user.name,
         is_active: user.is_active,
-        email: user.email
+        email: user.email,
+        role:user.role
 
     }
 

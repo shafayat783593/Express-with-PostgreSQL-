@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createProfile } from "./profile.controller";
+import { createProfile, getProfile } from "./profile.controller";
 
 
 const router = Router()
 
-router.post('/',createProfile )
+router.post('/', createProfile)
+router.get("/:id",getProfile)
 
 export const  profileRoute = router

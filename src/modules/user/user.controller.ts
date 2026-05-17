@@ -20,6 +20,7 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const getAllUser = async (req: Request, res: Response) => {
+    console.log("user",req.user)
     try {
         const result = await getAllUserFromDB()
         res.status(200).json({

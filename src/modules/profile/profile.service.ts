@@ -21,3 +21,18 @@ export const createProfileIntoDB = async (paylode:any) => {
     ,[user_id, bio, address, phone, gender ])
 return result
 }
+
+export const getProfileFromDB = async (id: string) => {
+    console.log(id)
+    const result = await pool.query(
+        `
+  SELECT * FROM profiles WHERE  id=$1        `
+        , [id])
+    
+    if (result.rows.length === 0) {
+        throw new Error(" Profile not found");
+        
+    }
+  
+    return result
+}
