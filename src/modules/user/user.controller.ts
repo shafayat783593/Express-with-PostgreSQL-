@@ -1,18 +1,23 @@
 import type { Request, Response } from "express"
 import { createUserIntoDB, deleteUserFromDB, getAllUserFromDB, getsingleUserFromDB, updateUserIntoDB } from "./user.service"
+import { sendRespons } from "../../utility/sendResponse"
 
 
 export const createUser = async (req: Request, res: Response) => {
 
     try {
         const result = await createUserIntoDB(req.body)
-        res.status(201).json({
-            message: "Created",
+        sendRespons(res, {
+            statusCode: 201,
+            success: true,
+            message: "user Create successfully",
             data: result.rows[0]
         })
     } catch (error: any) {
 
-        res.status(201).json({
+        sendRespons(res, {
+            statusCode: 500,
+            success: false,
             message: error.message,
             error: error
         })
@@ -20,10 +25,13 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const getAllUser = async (req: Request, res: Response) => {
-    console.log("user",req.user)
+    console.log("user", req.user)
     try {
         const result = await getAllUserFromDB()
-        res.status(200).json({
+
+
+        sendRespons(res, {
+            statusCode: 201,
             success: true,
             message: "Users retrived successfully",
             data: result
@@ -43,23 +51,31 @@ export const getsingleUser = async (req: Request, res: Response) => {
     try {
         const result = await getsingleUserFromDB(id as string)
         if (result.length === 0) {
-            res.status(404).json({
+
+
+            sendRespons(res, {
+                statusCode: 404,
                 success: false,
                 message: "Users not found",
                 data: {}
             })
         }
-        res.status(200).json({
+        sendRespons(res, {
+            statusCode: 200,
             success: true,
             message: "Users retrived successfully",
-            data:result
+            data: result
         })
     } catch (error: any) {
-        res.status(500).json({
+
+
+        sendRespons(res, {
+            statusCode: 404,
             success: false,
-            message: error.message,
-            error: error
-        })
+            message: "Users not found",
+            data: {}
+        }
+        )
     }
 }
 
@@ -70,8 +86,8 @@ export const updateUserData = async (req: Request, res: Response) => {
 
 
     try {
-const result= await updateUserIntoDB(req.body, id as string)
-     
+        const result = await updateUserIntoDB(req.body, id as string)
+
 
         if (result.rows.length === 0) {
             res.status(404).json({
@@ -116,7 +132,7 @@ export const deleteUser = async (req: Request, res: Response) => {
             message: "User deleted successfully",
             data: {}
         });
-        
+
     } catch (error: any) {
         return res.status(500).json({ // ✅ Added 'return'
             success: false,

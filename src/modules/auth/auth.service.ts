@@ -33,10 +33,9 @@ export const loginIntoDB = async (payload: Iauth) => {
         is_active: user.is_active,
         email: user.email,
         role: user.role
-
     }
 
-  
+
     const accessToken = jwt.sign(jwtpayload, config.jwt_access_token as string, { expiresIn: "15m" })
     const refreshToken = jwt.sign(jwtpayload, config.jwt_refresh_token as string, { expiresIn: "7d" })
     return { accessToken, refreshToken }
@@ -50,7 +49,6 @@ export const generateRefreshToken = async (token: string) => {
 
     if (!token) {
         throw new Error("Unauthorized access !")
-
     }
 
     //verify the token
@@ -58,7 +56,7 @@ export const generateRefreshToken = async (token: string) => {
     // find ther user into database
     const userData = await pool.query(
         `
-                SELECT * FROM users WHERE email=$1
+         SELECT * FROM users WHERE email=$1
                 `
         , [decoded.email])
     const user = userData.rows[0]
@@ -80,6 +78,5 @@ export const generateRefreshToken = async (token: string) => {
     }
     const accessToken = jwt.sign(jwtpayload, config.jwt_access_token as string, { expiresIn: "15m" })
 
-return accessToken
-
+    return accessToken
 }
