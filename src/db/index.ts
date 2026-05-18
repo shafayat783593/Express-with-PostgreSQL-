@@ -2,12 +2,21 @@
 import dotenv from "dotenv"
 dotenv.config()
 import { Pool } from "pg"
+import { neon } from '@neondatabase/serverless';
+
 const database = process.env.CONNECTION_STRING
+//export const sql = neon(process.env.CONNECTION_STRING);
+
+
+
 
  export const pool = new Pool({
     // connectionString: config.connectin_string
     connectionString:database
-})
+ })
+
+
+
 
 export const initDB = async () => {
     try {
